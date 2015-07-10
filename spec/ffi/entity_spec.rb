@@ -3,85 +3,85 @@ require 'spec_helper'
 
 
 describe Jansson::FFI::Entity do
-  let(:subject_class) { Jansson::FFI::Entity }
+  subject { Jansson::FFI::Entity }
   
   describe "from nil" do
-    subject { subject_class.from(nil) }
+    let(:ptr) { subject.ptr_from(nil) }
     
-    its(:type)    { should be :null }
-    its(:to_ruby) { should eq nil }
-    its(:to_s)    { should eq "null" }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::NULL }
+    specify { subject.ptr_to_ruby(ptr).should eq nil }
+    specify { subject.ptr_to_s(ptr)   .should eq "null" }
   end
   
   describe "from true" do
-    subject { subject_class.from(true) }
+    let(:ptr) { subject.ptr_from(true) }
     
-    its(:type)    { should be :true }
-    its(:to_ruby) { should eq true }
-    its(:to_s)    { should eq "true" }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::TRUE }
+    specify { subject.ptr_to_ruby(ptr).should eq true }
+    specify { subject.ptr_to_s(ptr)   .should eq "true" }
   end
   
   describe "from false" do
-    subject { subject_class.from(false) }
+    let(:ptr) { subject.ptr_from(false) }
     
-    its(:type)    { should be :false }
-    its(:to_ruby) { should eq false }
-    its(:to_s)    { should eq "false" }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::FALSE }
+    specify { subject.ptr_to_ruby(ptr).should eq false }
+    specify { subject.ptr_to_s(ptr)   .should eq "false" }
   end
   
   describe "from a positive Integer" do
-    subject { subject_class.from(88) }
+    let(:ptr) { subject.ptr_from(88) }
     
-    its(:type)    { should be :integer }
-    its(:to_ruby) { should eq 88 }
-    its(:to_s)    { should eq "88" }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::INTEGER }
+    specify { subject.ptr_to_ruby(ptr).should eq 88 }
+    specify { subject.ptr_to_s(ptr)   .should eq "88" }
   end
   
   describe "from a negative Integer" do
-    subject { subject_class.from(-99) }
+    let(:ptr) { subject.ptr_from(-99) }
     
-    its(:type)    { should be :integer }
-    its(:to_ruby) { should eq -99 }
-    its(:to_s)    { should eq "-99" }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::INTEGER }
+    specify { subject.ptr_to_ruby(ptr).should eq -99 }
+    specify { subject.ptr_to_s(ptr)   .should eq "-99" }
   end
   
   describe "from a Float" do
-    subject { subject_class.from(88.8) }
+    let(:ptr) { subject.ptr_from(88.8) }
     
-    its(:type)        { should be :real }
-    its(:to_ruby)     { should be_within(0.1).of 88.8 }
-    its(:"to_s.to_f") { should be_within(0.1).of 88.8 }
+    specify { subject.ptr_type(ptr)     .should be Jansson::FFI::Entity::REAL }
+    specify { subject.ptr_to_ruby(ptr)  .should be_within(0.1).of 88.8 }
+    specify { subject.ptr_to_s(ptr).to_f.should be_within(0.1).of 88.8 }
   end
   
   describe "from a String" do
-    subject { subject_class.from('foo') }
+    let(:ptr) { subject.ptr_from('foo') }
     
-    its(:type)    { should be :string }
-    its(:to_ruby) { should eq 'foo' }
-    its(:to_s)    { should eq '"foo"' }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::STRING }
+    specify { subject.ptr_to_ruby(ptr).should eq 'foo' }
+    specify { subject.ptr_to_s(ptr)   .should eq '"foo"' }
   end
   
   describe "from a Symbol" do
-    subject { subject_class.from(:bar) }
+    let(:ptr) { subject.ptr_from(:bar) }
     
-    its(:type)    { should be :string }
-    its(:to_ruby) { should eq 'bar' }
-    its(:to_s)    { should eq '"bar"' }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::STRING }
+    specify { subject.ptr_to_ruby(ptr).should eq 'bar' }
+    specify { subject.ptr_to_s(ptr)   .should eq '"bar"' }
   end
   
   describe "from an Array" do
-    subject { subject_class.from([1, 2, 3]) }
+    let(:ptr) { subject.ptr_from([1, 2, 3]) }
     
-    its(:type)    { should be :array }
-    its(:to_ruby) { should eq [1, 2, 3] }
-    its(:to_s)    { should eq '[1, 2, 3]' }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::ARRAY }
+    specify { subject.ptr_to_ruby(ptr).should eq [1, 2, 3] }
+    specify { subject.ptr_to_s(ptr)   .should eq '[1, 2, 3]' }
   end
   
   describe "from a Hash with String keys" do
-    subject { subject_class.from({ 'foo'=>88, 'bar'=>99 }) }
+    let(:ptr) { subject.ptr_from({ 'foo'=>88, 'bar'=>99 }) }
     
-    its(:type)    { should be :object }
-    its(:to_ruby) { should eq({ 'foo'=>88, 'bar'=>99 }) }
-    its(:to_s)    { should eq '{"foo": 88, "bar": 99}' }
+    specify { subject.ptr_type(ptr)   .should be Jansson::FFI::Entity::OBJECT }
+    specify { subject.ptr_to_ruby(ptr).should eq({ 'foo'=>88, 'bar'=>99 }) }
+    specify { subject.ptr_to_s(ptr)   .should eq '{"foo": 88, "bar": 99}' }
   end
 end
