@@ -1,0 +1,8 @@
+*.gem
+Gemfile.lock
+ext/jansson/jansson.tar.gz
+ext/jansson/jansson
+ext/jansson/config.status
+ext/jansson/libjansson.so
+lib/jansson/ffi/gen
+lib/jansson/ffi/gen.rb
