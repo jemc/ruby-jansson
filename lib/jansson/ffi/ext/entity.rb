@@ -8,7 +8,7 @@ module Jansson
       end
       
       def self.ptr_free!(ptr)
-        FFI.json_delete(ptr) if 0 >= (ptr_set_refcount(ptr, ptr_refcount(ptr) - 1))
+        FFI.json_delete(ptr)
       end
       
       def self.ptr_to_s(ptr, flags = DUMP_ENCODE_ANY | DUMP_PRESERVE_ORDER)
